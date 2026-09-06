@@ -148,6 +148,8 @@ The unit implementation in `include/EZ-Units/units.hpp` is derived from
 Benjamin Jurke's compile-time unit checking work — see his
 [2015 blog post](https://benjaminjurke.com/content/articles/2015/compile-time-numerical-unit-dimension-checking/).
 The original MPL-2.0 and attribution header is kept verbatim at the top of the
-derived file.
+derived file. `tests/fixtures/okapi/` also vendors four unmodified OkapiLib
+files (also MPL-2.0) solely so the okapi-bridge tests can run without a full
+OkapiLib install - see `tests/fixtures/README.md`.
 
 EZ-Units is licensed under MPL-2.0, matching OkapiLib.

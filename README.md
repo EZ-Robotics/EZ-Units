@@ -113,6 +113,50 @@ In practice this rarely matters, since [the literal ambiguity above](#-literal-a
 already pushes all new code onto `ez::literals`, so you're very unlikely to be
 mixing `ez` and `okapi` values in the same expression.
 
+## Gotchas
+
+### Code inside `namespace ez` must qualify `std::` math functions
+
+`units.hpp` declares free math functions in `namespace ez` (`ez::sin`, `ez::abs`,
+`ez::sqrt`, ...). Inside `namespace ez { ... }`, an unqualified call finds the
+`ez::` overload first and never looks at the global `::sin` from `<cmath>`, so a
+bare call with a plain number no longer compiles:
+
+```cpp
+namespace ez {
+  double a = sin(1.0);       // error: no matching function for call to 'sin'
+  double b = std::sin(1.0);  // ok
+}
+```
+
+Qualify these with `std::` when writing code inside `namespace ez`:
+
+`abs`, `sin`, `cos`, `tan`, `asin`, `acos`, `atan`, `atan2`, `sinh`, `cosh`,
+`tanh`, `asinh`, `acosh`, `atanh`, `sqrt`, `cbrt`, `pow`, `hypot`, `copysign`,
+`ceil`, `floor`, `round`, `trunc`
+
+Not affected, because EZ-Units declares no `ez::` version of them: `fabs`, `fmod`,
+`fmax`, `fmin`, `powf`, `exp`, `log`, `log10`, `lround`, `isnan`, and
+`std::min`/`std::max`. (`ez::mod`, `ez::square` and `ez::cube` are EZ-Units
+functions with no `<cmath>` counterpart, so they aren't hiding anything.) Code
+outside `namespace ez` is unaffected. This list was checked by compiling with
+clang and GCC.
+
+### `using namespace okapi::literals` only compiles while OkapiLib is visible
+
+Existing EZ-Template projects have `using namespace okapi::literals;` in
+`main.h`. With OkapiLib installed that line still compiles next to
+`using namespace ez::literals;`, and `24_in`, `90_deg` and `100_ms` resolve to the
+`ez` versions: the okapi header EZ-Units pulls in for the bridge declares the
+`okapi::literals` namespace but only its `_pi` suffix (the unit suffixes come
+from OkapiLib's `QLength.hpp` and friends, which is what
+[the ambiguity above](#-literal-ambiguity-with-okapilib) needs). Two consequences:
+
+- `_pi` **is** ambiguous while both are visible, so `2_pi` fails with the same
+  kind of "call to `operator""_pi` is ambiguous" error.
+- If OkapiLib is not installed at all, `using namespace okapi::literals;` is
+  itself an error (`use of undeclared identifier 'okapi'`) and has to be deleted.
+
 ## Version macro
 
 ```cpp
@@ -135,7 +179,10 @@ tests/run_tests.sh
 
 This builds and runs the unit test suite, plus a set of negative-compile checks
 that assert certain expressions (dimension mismatches, the literal ambiguity
-above, the arithmetic bridge limitation above) fail to compile as documented.
+above, the arithmetic bridge limitation above, the `namespace ez` math
+functions in [Gotchas](#gotchas)) fail to compile as documented. The
+okapi-bridge tests also check that `ez` and okapi produce bit-for-bit identical
+values for the same unit constants, literals and `convert` calls.
 CI runs this as a required check on every push and PR, alongside a separate job
 that builds the PROS template itself so packaging breakage (e.g. a stale
 `TEMPLATE_FILES` glob) is caught too.

@@ -19,7 +19,7 @@
 // version mismatch between a standalone EZ-Units install and the copy vendored
 // inside EZ-Template becomes a compile error instead of silent breakage.
 #define EZ_UNITS_VERSION_MAJOR 1
-#define EZ_UNITS_VERSION_MINOR 0
+#define EZ_UNITS_VERSION_MINOR 1
 
 // Optional bridge to OkapiLib. If a project has OkapiLib's units headers on its
 // include path (e.g. an EZ-Template project that still depends on OkapiLib

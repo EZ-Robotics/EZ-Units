@@ -139,7 +139,7 @@ mixing `ez` and `okapi` values in the same expression.
 
 ```cpp
 #define EZ_UNITS_VERSION_MAJOR 1
-#define EZ_UNITS_VERSION_MINOR 0
+#define EZ_UNITS_VERSION_MINOR 1
 ```
 
 This is load-bearing for EZ-Template: it `static_assert`s on

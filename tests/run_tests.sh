@@ -30,6 +30,10 @@ echo "== Building default test suite (no okapi on include path) =="
   "$TESTS_DIR/test_arithmetic.cpp" \
   "$TESTS_DIR/test_misc.cpp" \
   "$TESTS_DIR/test_no_okapi.cpp" \
+  "$TESTS_DIR/test_motion.cpp" \
+  "$TESTS_DIR/test_geometry.cpp" \
+  "$TESTS_DIR/test_mass.cpp" \
+  "$TESTS_DIR/test_unit_name.cpp" \
   -o "$BUILD_DIR/host_tests" || { echo "FAIL: default test suite failed to compile"; fail=1; }
 
 if [ -x "$BUILD_DIR/host_tests" ]; then
@@ -42,6 +46,7 @@ echo "== Building okapi-bridge test suite (okapi fixture on include path) =="
   -I "$INCLUDE_DIR" -I "$TESTS_DIR" -I "$FIXTURES_DIR" \
   "$TESTS_DIR/test_main.cpp" \
   "$TESTS_DIR/test_okapi_bridge.cpp" \
+  "$TESTS_DIR/test_okapi_bridge_parity.cpp" \
   -o "$BUILD_DIR/host_tests_okapi_bridge" || { echo "FAIL: okapi-bridge test suite failed to compile"; fail=1; }
 
 if [ -x "$BUILD_DIR/host_tests_okapi_bridge" ]; then

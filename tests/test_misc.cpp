@@ -8,7 +8,7 @@ static_assert(sizeof(ez::QAngle) == sizeof(double), "QAngle must not carry any o
 static_assert(sizeof(ez::QTime) == sizeof(double), "QTime must not carry any overhead over a plain double");
 
 static_assert(EZ_UNITS_VERSION_MAJOR == 1, "EZ_UNITS_VERSION_MAJOR must be defined");
-static_assert(EZ_UNITS_VERSION_MINOR == 0, "EZ_UNITS_VERSION_MINOR must be defined");
+static_assert(EZ_UNITS_VERSION_MINOR == 1, "EZ_UNITS_VERSION_MINOR must be defined");
 
 // constexpr evaluation at compile time
 constexpr ez::QLength kTile = 24_in;

@@ -26,7 +26,7 @@ EXCLUDE_COLD_LIBRARIES:=
 # Set this to 1 to add additional rules to compile your project as a PROS library template
 IS_LIBRARY:=1
 LIBNAME:=EZ-Units
-VERSION:=1.0.0
+VERSION:=1.1.0
 # this line excludes main.cpp - EZ-Units is header-only, so the resulting
 # EZ-Units.a archive is expected to be empty. main.cpp exists only so the
 # project has something to compile locally.

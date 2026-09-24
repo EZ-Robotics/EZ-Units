@@ -47,3 +47,8 @@ inline const char *g_current_test = "";
   } while (0)
 
 #define EZ_ASSERT_NEAR(a, b, eps) EZ_ASSERT(std::fabs((double)(a) - (double)(b)) < (eps))
+
+// Relative tolerance, for magnitudes where an absolute 1e-12 is tighter than
+// double precision can represent (e.g. kilometer3, mile3 are ~1e9-1e10).
+#define EZ_ASSERT_REL_NEAR(a, b, releps) \
+  EZ_ASSERT(std::fabs((double)(a) - (double)(b)) < (releps) * std::fmax(1.0, std::fabs((double)(b))))

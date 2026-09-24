@@ -64,14 +64,36 @@ gives you back a velocity (an unnamed, but still fully checked, quantity type).
 
 ## Unit list
 
-| Quantity  | Base unit    | Literals |
-|-----------|--------------|----------|
-| `QLength` | meter        | `_mm`, `_cm`, `_m`, `_km`, `_in`, `_ft`, `_yd`, `_mi`, `_tile` |
-| `QAngle`  | radian       | `_rad`, `_deg` |
-| `QTime`   | second       | `_s`, `_ms`, `_min`, `_h`, `_day` |
+| Quantity                 | Base unit    | Literals |
+|--------------------------|--------------|----------|
+| `QLength`                | meter        | `_mm`, `_cm`, `_m`, `_km`, `_in`, `_ft`, `_yd`, `_mi`, `_tile` |
+| `QAngle`                 | radian       | `_rad`, `_deg` |
+| `QTime`                  | second       | `_s`, `_ms`, `_min`, `_h`, `_day` |
+| `QSpeed`                 | m/s          | `_mps`, `_miph`, `_kmph` |
+| `QAcceleration`          | m/s²         | `_mps2`, `_G` |
+| `QJerk`                  | m/s³         | none |
+| `QAngularSpeed`          | rad/s        | `_rpm` |
+| `QAngularAcceleration`   | rad/s²       | none |
+| `QAngularJerk`           | rad/s³       | none |
+| `QFrequency`             | hertz        | `_Hz` |
+| `QArea`                  | meter²       | none |
+| `QVolume`                | meter³       | none |
+| `QMass`                  | kilogram     | `_kg`, `_g`, `_t`, `_oz`, `_lb`, `_st` |
+| `QForce`                 | newton       | `_n`, `_lbf`, `_kp` |
+| `QPressure`              | pascal       | `_Pa`, `_bar`, `_psi` |
+| `QTorque`                | newton-meter | `_nM`, `_inLb`, `_ftLb` |
 
 `ez::Number` (unitless) and the `_pi` literal (a plain `long double`, not a
 quantity) are also available, matching OkapiLib.
+
+`getShortUnitName(q)` returns a short suffix for a `QLength` or `QAngle`
+value that equals one of the named constants above (e.g.
+`getShortUnitName(1_in)` returns `"in"`), or `""` for a value that doesn't -
+the same coverage OkapiLib's `RQuantityName.hpp` had, ported to be safe on
+the brain (no `typeid`, no per-call heap allocation, no exceptions).
+
+As of this header, EZ-Units covers every unit type OkapiLib's
+`include/okapi/api/units/` shipped.
 
 ## ⚠️ Literal ambiguity with OkapiLib
 

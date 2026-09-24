@@ -8,7 +8,7 @@
 int main() {
   ez::QLength a(1.0);
   okapi::QLength b(1.0);
-  auto c = a + b; // no operator+ for (ez::RQuantity, okapi::RQuantity)
+  auto c = a + b;  // no operator+ for (ez::RQuantity, okapi::RQuantity)
   (void)c;
   return 0;
 }

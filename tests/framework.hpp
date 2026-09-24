@@ -29,21 +29,21 @@ inline int g_failures = 0;
 inline int g_total = 0;
 inline const char *g_current_test = "";
 
-} // namespace eztest
+}  // namespace eztest
 
-#define EZTEST(name)                                                                             \
-  static void eztest_##name();                                                                    \
-  static ::eztest::Registrar eztest_reg_##name(#name, eztest_##name);                             \
+#define EZTEST(name)                                                  \
+  static void eztest_##name();                                        \
+  static ::eztest::Registrar eztest_reg_##name(#name, eztest_##name); \
   static void eztest_##name()
 
 #define EZ_ASSERT(cond)                                                                           \
-  do {                                                                                             \
-    ++::eztest::g_total;                                                                           \
-    if (!(cond)) {                                                                                 \
-      ++::eztest::g_failures;                                                                      \
-      std::fprintf(stderr, "FAIL [%s] %s:%d: %s\n", ::eztest::g_current_test, __FILE__, __LINE__,  \
-                   #cond);                                                                         \
-    }                                                                                               \
+  do {                                                                                            \
+    ++::eztest::g_total;                                                                          \
+    if (!(cond)) {                                                                                \
+      ++::eztest::g_failures;                                                                     \
+      std::fprintf(stderr, "FAIL [%s] %s:%d: %s\n", ::eztest::g_current_test, __FILE__, __LINE__, \
+                   #cond);                                                                        \
+    }                                                                                             \
   } while (0)
 
 #define EZ_ASSERT_NEAR(a, b, eps) EZ_ASSERT(std::fabs((double)(a) - (double)(b)) < (eps))

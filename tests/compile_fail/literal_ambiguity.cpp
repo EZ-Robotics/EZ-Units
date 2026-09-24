@@ -8,7 +8,7 @@ using namespace ez::literals;
 using namespace okapi::literals;
 
 int main() {
-  auto x = 24_in; // ambiguous between ez::literals and okapi::literals
+  auto x = 24_in;  // ambiguous between ez::literals and okapi::literals
   (void)x;
   return 0;
 }

@@ -1,4 +1,4 @@
-name: CI
+name: Build
 
 on:
   push:
@@ -9,30 +9,40 @@ on:
 
 jobs:
   host-tests:
-    name: Host tests (g++, no PROS/hardware)
+    name: Host tests (${{ matrix.cxx }}, ${{ matrix.std }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - cxx: g++
+            std: gnu++20
+          - cxx: g++
+            std: gnu++23
+          - cxx: clang++
+            std: c++20
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Run host test suite
         run: |
           chmod +x tests/run_tests.sh
-          CXX=g++ STD=gnu++20 tests/run_tests.sh
+          CXX=${{ matrix.cxx }} STD=${{ matrix.std }} tests/run_tests.sh
 
   pros-build:
     name: Build PROS template
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Run LemLib/pros-build
         id: build
         uses: LemLib/pros-build@v5.1.0
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ steps.build.outputs.name }}
           path: ${{ github.workspace }}/template/*

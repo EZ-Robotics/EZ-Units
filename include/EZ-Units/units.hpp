@@ -39,7 +39,7 @@
 namespace ez {
 template <typename MassDim, typename LengthDim, typename TimeDim, typename AngleDim>
 class RQuantity {
-  public:
+ public:
   explicit constexpr RQuantity() : value(0.0) {
   }
 
@@ -51,7 +51,7 @@ class RQuantity {
 
 #ifdef EZ_UNITS_HAS_OKAPI_BRIDGE
   constexpr RQuantity(const okapi::RQuantity<MassDim, LengthDim, TimeDim, AngleDim> &val)
-    : value(val.getValue()) {
+      : value(val.getValue()) {
   }
 #endif
 
@@ -105,15 +105,15 @@ class RQuantity {
                      std::ratio_divide<AngleDim, std::ratio<2>>>(std::sqrt(value));
   }
 
-  private:
+ private:
   double value;
 };
 
 // Predefined (physical unit) quantity types:
 // ------------------------------------------
-#define QUANTITY_TYPE(_Mdim, _Ldim, _Tdim, _Adim, name)                                            \
-  typedef RQuantity<std::ratio<_Mdim>, std::ratio<_Ldim>, std::ratio<_Tdim>, std::ratio<_Adim>>    \
-    name;
+#define QUANTITY_TYPE(_Mdim, _Ldim, _Tdim, _Adim, name)                                         \
+  typedef RQuantity<std::ratio<_Mdim>, std::ratio<_Ldim>, std::ratio<_Tdim>, std::ratio<_Adim>> \
+      name;
 
 // Unitless
 QUANTITY_TYPE(0, 0, 0, 0, Number)
@@ -380,19 +380,19 @@ tan(const RQuantity<std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<1>> 
 constexpr RQuantity<std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<1>>
 asin(const Number &rhs) {
   return RQuantity<std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<1>>(
-    std::asin(rhs.getValue()));
+      std::asin(rhs.getValue()));
 }
 
 constexpr RQuantity<std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<1>>
 acos(const Number &rhs) {
   return RQuantity<std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<1>>(
-    std::acos(rhs.getValue()));
+      std::acos(rhs.getValue()));
 }
 
 constexpr RQuantity<std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<1>>
 atan(const Number &rhs) {
   return RQuantity<std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<1>>(
-    std::atan(rhs.getValue()));
+      std::atan(rhs.getValue()));
 }
 
 constexpr Number
@@ -413,26 +413,26 @@ tanh(const RQuantity<std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<1>>
 constexpr RQuantity<std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<1>>
 asinh(const Number &rhs) {
   return RQuantity<std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<1>>(
-    std::asinh(rhs.getValue()));
+      std::asinh(rhs.getValue()));
 }
 
 constexpr RQuantity<std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<1>>
 acosh(const Number &rhs) {
   return RQuantity<std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<1>>(
-    std::acosh(rhs.getValue()));
+      std::acosh(rhs.getValue()));
 }
 
 constexpr RQuantity<std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<1>>
 atanh(const Number &rhs) {
   return RQuantity<std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<1>>(
-    std::atanh(rhs.getValue()));
+      std::atanh(rhs.getValue()));
 }
 
 template <typename M, typename L, typename T, typename A>
 constexpr RQuantity<std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<1>>
 atan2(const RQuantity<M, L, T, A> &lhs, const RQuantity<M, L, T, A> &rhs) {
   return RQuantity<std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<1>>(
-    std::atan2(lhs.getValue(), rhs.getValue()));
+      std::atan2(lhs.getValue(), rhs.getValue()));
 }
 
 inline namespace literals {
@@ -442,8 +442,8 @@ constexpr long double operator"" _pi(long double x) {
 constexpr long double operator"" _pi(unsigned long long int x) {
   return static_cast<double>(x) * 3.1415926535897932384626433832795;
 }
-} // namespace literals
-} // namespace ez
+}  // namespace literals
+}  // namespace ez
 
 // Conversion macro, which utilizes the string literals
 #define ConvertTo(_x, _y) (_x).convert(1.0_##_y)
@@ -455,7 +455,7 @@ namespace ez {
 // the original operators above) convert back implicitly via the constructor
 // below, so `QLength d = meter + meter;` keeps working the same as it always did.
 class QLength : public RQuantity<std::ratio<0>, std::ratio<1>, std::ratio<0>, std::ratio<0>> {
-  public:
+ public:
   explicit constexpr QLength() : RQuantity() {
   }
   explicit constexpr QLength(double val) : RQuantity(val) {
@@ -464,12 +464,12 @@ class QLength : public RQuantity<std::ratio<0>, std::ratio<1>, std::ratio<0>, st
   }
 #ifdef EZ_UNITS_HAS_OKAPI_BRIDGE
   constexpr QLength(const okapi::RQuantity<std::ratio<0>, std::ratio<1>, std::ratio<0>, std::ratio<0>> &val)
-    : RQuantity(val) {
+      : RQuantity(val) {
   }
 #endif
 };
 
-constexpr QLength meter(1.0); // SI base unit
+constexpr QLength meter(1.0);  // SI base unit
 constexpr QLength decimeter = meter / 10;
 constexpr QLength centimeter = meter / 100;
 constexpr QLength millimeter = meter / 1000;
@@ -535,12 +535,12 @@ constexpr QLength operator"" _in(unsigned long long int x) {
 constexpr QLength operator"" _tile(unsigned long long int x) {
   return static_cast<double>(x) * tile;
 }
-} // namespace literals
-} // namespace ez
+}  // namespace literals
+}  // namespace ez
 
 namespace ez {
 class QAngle : public RQuantity<std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<1>> {
-  public:
+ public:
   explicit constexpr QAngle() : RQuantity() {
   }
   explicit constexpr QAngle(double val) : RQuantity(val) {
@@ -549,7 +549,7 @@ class QAngle : public RQuantity<std::ratio<0>, std::ratio<0>, std::ratio<0>, std
   }
 #ifdef EZ_UNITS_HAS_OKAPI_BRIDGE
   constexpr QAngle(const okapi::RQuantity<std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<1>> &val)
-    : RQuantity(val) {
+      : RQuantity(val) {
   }
 #endif
 };
@@ -570,12 +570,12 @@ constexpr QAngle operator"" _deg(long double x) {
 constexpr QAngle operator"" _deg(unsigned long long int x) {
   return static_cast<double>(x) * degree;
 }
-} // namespace literals
-} // namespace ez
+}  // namespace literals
+}  // namespace ez
 
 namespace ez {
 class QTime : public RQuantity<std::ratio<0>, std::ratio<0>, std::ratio<1>, std::ratio<0>> {
-  public:
+ public:
   explicit constexpr QTime() : RQuantity() {
   }
   explicit constexpr QTime(double val) : RQuantity(val) {
@@ -584,12 +584,12 @@ class QTime : public RQuantity<std::ratio<0>, std::ratio<0>, std::ratio<1>, std:
   }
 #ifdef EZ_UNITS_HAS_OKAPI_BRIDGE
   constexpr QTime(const okapi::RQuantity<std::ratio<0>, std::ratio<0>, std::ratio<1>, std::ratio<0>> &val)
-    : RQuantity(val) {
+      : RQuantity(val) {
   }
 #endif
 };
 
-constexpr QTime second(1.0); // SI base unit
+constexpr QTime second(1.0);  // SI base unit
 constexpr QTime millisecond = second / 1000;
 constexpr QTime minute = 60 * second;
 constexpr QTime hour = 60 * minute;
@@ -626,5 +626,5 @@ constexpr QTime operator"" _h(unsigned long long int x) {
 constexpr QTime operator"" _day(unsigned long long int x) {
   return static_cast<double>(x) * day;
 }
-} // namespace literals
-} // namespace ez
+}  // namespace literals
+}  // namespace ez

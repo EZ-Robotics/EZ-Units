@@ -1,5 +1,6 @@
 // Dimension mismatch: operator+ requires both sides to share the same dims.
 // This must fail to compile.
+// EXPECT: error:.*QLength.*QTime
 #include "EZ-Units/units.hpp"
 
 using namespace ez::literals;

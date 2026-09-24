@@ -1,7 +1,7 @@
+#include <cmath>
+
 #include "EZ-Units/units.hpp"
 #include "framework.hpp"
-
-#include <cmath>
 
 using namespace ez::literals;
 

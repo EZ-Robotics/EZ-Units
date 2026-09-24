@@ -1,6 +1,7 @@
 // Documented in the README: pulling in both okapi::literals and ez::literals
 // makes every shared literal suffix ambiguous. This file is only compiled by
 // the okapi-fixture test target, which puts tests/fixtures on the include path.
+// EXPECT: error:.*operator""_in.*ambiguous
 #include "EZ-Units/units.hpp"
 #include "okapi/api/units/QLength.hpp"
 

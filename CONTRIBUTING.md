@@ -42,4 +42,7 @@ Lead with a [gitmoji](https://gitmoji.dev):
 
 ## Merging
 
-Use **Squash and merge**, so `main`'s history stays one gitmoji-prefixed commit per PR.
+Prefer **Create a merge commit**, so every gitmoji-prefixed commit lands on `main`
+individually instead of getting collapsed into one. **Squash and merge** is fine too — e.g.
+for a branch with messy or non-gitmoji intermediate commits — as long as the resulting squash
+commit still leads with a gitmoji.

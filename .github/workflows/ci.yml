@@ -30,6 +30,21 @@ jobs:
           chmod +x tests/run_tests.sh
           CXX=${{ matrix.cxx }} STD=${{ matrix.std }} tests/run_tests.sh
 
+  literal-spelling:
+    name: Literal operator spelling
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Reject spaced literal operators
+        run: "! grep -rn 'operator\"\" ' include/"
+
+      - name: Compile header with -Werror=deprecated-literal-operator
+        run: |
+          echo '#include <EZ-Units/units.hpp>' > tu.cpp
+          clang++ -std=c++2c -Iinclude -Werror=deprecated-literal-operator -fsyntax-only tu.cpp
+
   pros-build:
     name: Build PROS template
     runs-on: ubuntu-latest

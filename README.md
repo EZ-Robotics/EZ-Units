@@ -162,6 +162,13 @@ CI runs this as a required check on every push and PR, alongside a separate job
 that builds the PROS template itself so packaging breakage (e.g. a stale
 `TEMPLATE_FILES` glob) is caught too.
 
+## Changelog
+
+### 1.1.2
+
+Removed the space in every literal operator declaration (`operator""_in`). GCC 15 and newer
+warned on each one under C++23 and later (`-Wdeprecated-literal-operator`). No behavior change.
+
 ## Attribution
 
 The unit implementation in `include/EZ-Units/units.hpp` is derived from
